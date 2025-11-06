@@ -1,0 +1,15 @@
+{
+  "routes": [
+    { "route": "/dashboard.html", "allowedRoles": ["authenticated"] },
+    { "route": "/login/microsoft", "redirect": "/.auth/login/aad?post_login_redirect_uri=/dashboard.html" },
+    { "route": "/login/google", "redirect": "/.auth/login/google?post_login_redirect_uri=/dashboard.html" },
+    { "route": "/login/github", "redirect": "/.auth/login/github?post_login_redirect_uri=/dashboard.html" },
+    { "route": "/logout", "redirect": "/.auth/logout?post_logout_redirect_uri=/" }
+  ],
+  "responseOverrides": {
+    "401": {
+      "redirect": "/.auth/login/aad?post_login_redirect_uri=.referrer",
+      "statusCode": 302
+    }
+  }
+}

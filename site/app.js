@@ -11,6 +11,7 @@ async function getMe() {
 async function showUser() {
   const who = document.getElementById('username');
   if (!who) return;
+
   const me = await getMe();
   who.textContent = me
     ? `${me.userDetails} (via ${me.identityProvider})`
@@ -20,7 +21,7 @@ async function showUser() {
 (async () => {
   // Example: hardcoded blob; you can pick based on UI or user profile
   const blob = "test.mp4";
-  const res = await fetch(`/api/video?blob=${encodeURIComponent(blob)}`, { credentials: "include" });
+  const res = await fetch(`/api/video-sas?blob=${encodeURIComponent(blob)}`, { credentials: "include" });
   if (!res.ok) {
     console.error("Failed to get SAS", res.status);
     return;
@@ -29,6 +30,9 @@ async function showUser() {
   const v = document.getElementById("player");
   v.src = url;          // Point <video> directly at the SAS URL
   v.play().catch(()=>{}); // autoplay might be blocked; user can click Play
+
+  const videoUrl = document.getElementById('videoUrl');
+  videoUrl.innerText = url;
 })();
 
 showUser()

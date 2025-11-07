@@ -9,13 +9,18 @@ async function getMe() {
 }
 
 async function showUser() {
-  const who = document.getElementById('username');
-  if (!who) return;
+    const who = document.getElementById('username');
+    const roles = document.getElementById('userRoles');
+    const me = await getMe();
 
-  const me = await getMe();
-  who.textContent = me
-    ? `${me.userDetails} (via ${me.identityProvider})`
-    : 'Not signed in.';
+    if (me) {
+        who.textContent = `${me.userDetails} (via ${me.identityProvider})`;
+        roles.textContent = me.userRoles.join(', ');
+    }
+    else {
+        who.textContent = 'Not signed in.';
+        roles.textContent = 'none';
+    }
 }
 
 (async () => {
